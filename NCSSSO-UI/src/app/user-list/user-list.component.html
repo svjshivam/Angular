@@ -1,0 +1,57 @@
+<div class="table-responsive pl-4 pr-4">
+
+    <app-list-header [title]="'User'" [$parent]="getSelf()">
+    </app-list-header>
+
+    <form class="form-inline my-2">
+        <label for="firstName" class="ml-sm-2">Name </label>
+        <input type="text" name="firstName" id="firstName" class="form-control form-control-sm ml-2"
+            placeholder="F Name" [(ngModel)]="form.searchParams.firstName">
+
+        <label for="lastName" class="ml-sm-2">Name </label>
+        <input type="text" name="lastName" id="lastName" class="form-control form-control-sm ml-2" placeholder="L Name"
+            [(ngModel)]="form.searchParams.lastName">
+
+        <label for="orgName" class="ml-sm-2">Org </label>
+        <input type="text" name="orgName" id="orgName" class="form-control form-control-sm ml-2"
+            placeholder="Organization" [(ngModel)]="form.searchParams.orgName">
+
+        <button (click)="search()" class="btn btn-outline-primary btn-sm ml-2"><i class="fa fa-search-plus"></i>
+            Search</button> &nbsp;
+    </form>
+
+    <table class="table table-sm table-striped my-1 ">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DP</th>
+                <th>Name</th>
+                <th>Org</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th align="right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of form.list; let i = index">
+                <td>{{pageIndex(i)}}</td>
+                <td><a href="{{getDoc(e.imageId)}}" target="_blank">
+                        <img src="{{getDocThumbnail(e.imageId)}}" width="50px">
+                    </a>
+                </td>
+                <td> {{e.firstName}} {{e.lastName}}</td>
+                <td>{{e.orgName}}</td>
+                <td>{{e.phone}}</td>
+                <td>{{e.status}}</td>
+                <td align="left">
+                    <a title="View" href="{{getDoc(e.logoId)}}" target="_blank"
+                        class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i></a>&nbsp;
+                    <a title="Edit" href="#" class="btn btn-outline-success btn-sm"><i class="fa fa-edit"></i></a>&nbsp;
+                    <a title="Delete" (click)="delete(e.id)" class="btn btn-outline-danger btn-sm"><i
+                            class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-list-header [$parent]="getSelf()"></app-list-header>
+</div>

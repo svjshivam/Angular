@@ -1,0 +1,154 @@
+<div class="table-responsive pl-4 pr-4">
+    
+    <app-list-header [title]="'Organization'" [$parent]="getSelf()"  >
+    </app-list-header>
+
+    <form class="form-inline my-2">
+        <label for="name" class="ml-sm-2">Name </label>
+        <input type="text" name="name" id="name" class="form-control form-control-sm ml-2" placeholder="Name"
+            [(ngModel)]="form.searchParams.name">
+        <label for="rags" class="ml-sm-2">Address</label>
+        <input [(ngModel)]="form.searchParams.address" type="text" name="address"
+            class="form-control form-control-sm ml-sm-2 " id="address" placeholder="address">
+        <button (click)="search()" class="btn btn-outline-primary btn-sm ml-2"><i class="fa fa-search-plus"></i>
+            Search</button> &nbsp;
+    </form>
+
+    <table class="table table-sm table-striped my-1 ">
+        <thead>
+            <tr>
+                <th>S.No.</th>
+                <th>Logo</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Status</th>
+                <th align="right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of form.list; let i = index">
+                <td>{{pageIndex(i)}}</td>
+                <td><a href="{{getDoc(e.logoId)}}" target="_blank">
+                    <img src="{{getDocThumbnail(e.logoId)}}" width="50px">
+                    </a>
+                </td>                
+                <td>
+                    <i *ngIf="e.status == 'Active'" class='fas fa-user-alt primary'
+                    style='font-size: 12px; color: green'>
+                    </i>
+
+                    <i *ngIf="e.status != 'Active'" class='fas fa-user-alt primary'
+                        style='font-size: 12px; color: grey'>
+                    </i>
+                    {{e.name}} {{e.skey}}
+                </td>
+                <td>{{e.orgCode}}</td>
+                <td>{{e.address}}</td>
+                <td>{{e.phone}}</td>
+                <td>{{e.email}}</td>
+                <td>{{e.status}}</td>     
+                <td align="right">
+                    <div class="row">
+                        <button title="Edit" class="btn btn-outline-success btn-sm" data-toggle="modal"
+                            data-target="#editModal" (click)="get(e.id)">
+                            <i class="fa fa-edit"></i>
+                        </button>
+                        &nbsp;
+                        <button title="Delete" class="btn btn-outline-danger btn-sm" ng-click="delete(d.id)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </div>
+                </td>                           
+            </tr>
+        </tbody>
+    </table>
+    <app-list-header [$parent]="getSelf()" ></app-list-header>
+</div>
+
+<div class="modal" id="editModal" role="dialog">
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="model-dialog col-sm-6 mt-4  " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Organization</h5>
+                    <button class="btn btn-outline-secondary btn-sm" data-dismiss="modal" aria-label="Close">
+                        <i class="fa fa-window-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <p>
+                            <form-error [form]="form"></form-error>
+                        </p>
+                        <div class="form-group form-row">
+                            <label for="name" class="col-sm-1 col-form-label col-form-label-sm">Name <i
+                                    class="fas fa-asterisk" style="color:red"></i></label>
+                            <div class="col">
+                                <input id="name" name="name" placeholder="Name" type="text"
+                                    class="form-control form-control-sm" required [(ngModel)]="form.data.name">
+                            </div>
+                            <label for="code" class="col-sm-1 col-form-label col-form-label-sm">Code<i
+                                    class="fas fa-asterisk" style="color:red"></i></label>
+                            <div class="col">
+                                <input id="code" name="code" placeholder="Code" type="text"
+                                    class="form-control form-control-sm" 
+                                    [(ngModel)]="form.data.orgCode">
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="email" class="col-sm-1 col-form-label col-form-label-sm">Email <i
+                                    class="fas fa-asterisk" style="color:red"></i></label>
+                            <div class="col">
+                                <input id="email" name="email" placeholder="Email" type="email"
+                                    class="form-control form-control-sm" required [(ngModel)]="form.data.email">
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="phone" class="col-sm-1 col-form-label col-form-label-sm">Phone <i
+                                    class="fas fa-asterisk" style="color:red"></i></label>
+                            <div class="col">
+                                <input id="phone" name="phone" placeholder="Phone" type="text"
+                                    class="form-control form-control-sm" required [(ngModel)]="form.data.phone">
+                            </div>
+                            <label for="status" class="col-sm-1 col-form-label col-form-label-sm">Status<i
+                                    class="fas fa-asterisk" style="color:red"></i></label>
+                            <div class="col">
+                                <select id="status" name="status" [(ngModel)]="form.data.status"
+                                    class="form-control form-control-sm">
+                                    <option *ngFor="let e of statusList" [value]="e">{{e}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group form-row">
+                            <label for="address"
+                                class="col-sm-1 col-form-label col-form-label-sm">Address</label>
+                            <div class="col">
+                                <textarea id="address" name="address" placeholder="Address" type="text"
+                                    class="form-control form-control-sm" rows="5" [(ngModel)]="form.data.address">
+                                </textarea>
+                            </div>
+                        </div>
+                        <div class="form-group form-row text-center" >
+                            <div class="col-sm-3" ></div>
+                            <img src="{{getDocThumbnail(form.data.logoId)}}" width="200px">
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary btn-sm" (click)="save()">
+                        <i class="fa fa-save"></i>
+                        Save
+                    </button>
+                    <button class="btn btn-outline-secondary btn-sm" data-dismiss="modal"><i
+                            class="fa fa-window-close"></i> Close</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+        </div>    
+</div>

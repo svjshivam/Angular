@@ -1,0 +1,55 @@
+<div class="table-responsive pl-4 pr-4">
+
+    <app-list-header [title]="'User'" [$parent]="getSelf()">
+    </app-list-header>
+
+    <form class="form-inline my-2">
+        <label for="appName" class="ml-sm-2">App Name </label>
+        <input type="text" name="appName" id="appName" class="form-control form-control-sm ml-2"
+            placeholder="app name" [(ngModel)]="form.searchParams.appName">
+
+        
+
+        <label for="menuName" class="ml-sm-2">Menu Name </label>
+        <input type="text" name="menuName" id="menuName" class="form-control form-control-sm ml-2"
+            placeholder="menu name" [(ngModel)]="form.searchParams.menuName">
+
+        <button (click)="search()" class="btn btn-outline-primary btn-sm ml-2"><i class="fa fa-search-plus"></i>
+            Search</button> &nbsp;
+    </form>
+
+    <table class="table table-sm table-striped my-1 ">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>DP</th>
+                <th>App Name</th>
+                <th>Org</th>
+                <th>Menu Name</th>
+                <th>Role Name</th>
+                <th align="right">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let e of form.list; let i = index">
+                <td>{{pageIndex(i)}}</td>
+                <td><a href="{{getDoc(e.imageId)}}" target="_blank">
+                        <img src="{{getDocThumbnail(e.imageId)}}" width="50px">
+                    </a>
+                </td>
+                <td> {{e.appName}}</td>
+                <td>{{e.orgName}}</td>
+                <td>{{e.menuName}}</td>
+                <td>{{e.roleName}}</td>
+                <td align="left">
+                    <a title="View" href="{{getDoc(e.logoId)}}" target="_blank"
+                        class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i></a>&nbsp;
+                    <a title="Edit" href="#" class="btn btn-outline-success btn-sm"><i class="fa fa-edit"></i></a>&nbsp;
+                    <a title="Delete" (click)="delete(e.id)" class="btn btn-outline-danger btn-sm"><i
+                            class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <app-list-header [$parent]="getSelf()"></app-list-header>
+</div>

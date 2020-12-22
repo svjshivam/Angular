@@ -1,0 +1,49 @@
+<nav class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar"
+  style="height:40px ;  color:white ; background-color:#007bff;">
+
+  <a class="navbar-brand h1" href="#">NCS</a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Docs
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" routerLink="dashboard">DashBoard</a>
+          <a class="dropdown-item" routerLink="applicationlist">Application</a>
+          <a class="dropdown-item" routerLink="orglist">Organization</a>          
+          <a class="dropdown-item" routerLink="userlist">User</a>
+          <a class="dropdown-item" routerLink="rolelist">Role</a>            
+          <a class="dropdown-item" routerLink="userlist">User List</a> 
+          <a class="dropdown-item" routerLink="rolelist">Role List</a> 
+          <a class="dropdown-item" routerLink="rolemenuitem">Role Menu Item</a>            
+
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="Dashboard.html">Dashbpard</a>
+       
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="rolemenuitem">Role Menu Item</a>
+       
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="ncs-control" type="search" placeholder="Search" aria-label="Search">
+      <button class="ncs-btn-s ml-2" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+<router-outlet></router-outlet>
